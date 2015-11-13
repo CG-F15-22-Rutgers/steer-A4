@@ -32,18 +32,15 @@ namespace SteerLib
 		public:
 			double f;
 			double g;
-			double h;
 			Util::Point point;
 			AStarPlannerNode* parent;
-			AStarPlannerNode(Util::Point _point = Util::Point(0.0f, 0.0f, 0.0f) , double _g = 0.0f , double _f = 0.0f , double _h = 0.0f ,  AStarPlannerNode* _parent= NULL)
+			AStarPlannerNode(Util::Point _point, double _g, double _f, AStarPlannerNode* _parent)
 			{
 				f = _f;
 				point = _point;
 				g = _g;
-				h = _h;
 				parent = _parent;
 			}
-
 			bool operator<(AStarPlannerNode other) const
 		    {
 		        return this->f < other.f;
@@ -54,7 +51,7 @@ namespace SteerLib
 		    }
 		    bool operator==(AStarPlannerNode other) const
 		    {
-		        return (this->point.x == other.point.x && this->point.z == other.point.z);
+		        return ((this->point.x == other.point.x) && (this->point.z == other.point.z));
 		    }
 
 	};
@@ -99,10 +96,6 @@ namespace SteerLib
 			*/
 
 			bool computePath(std::vector<Util::Point>& agent_path, Util::Point start, Util::Point goal, SteerLib::GridDatabase2D * _gSpatialDatabase, bool append_to_path = false);
-			double calcH_by_Euclidian(unsigned int x_n, unsigned int z_n, unsigned int x_g, unsigned int z_g);
-			double calcH_by_Manhattan(unsigned int x_n, unsigned int z_n, unsigned int x_g, unsigned int z_g);
-			static bool comp(AStarPlannerNode i, AStarPlannerNode j);
-
 		private:
 			SteerLib::GridDatabase2D * gSpatialDatabase;
 	};
